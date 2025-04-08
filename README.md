@@ -39,14 +39,6 @@ The "Fraud Detection in Financial Transactions" project is designed to identify 
 ### Version Control
 - Git and GitHub
 
-### Evaluation Metrics
-- Precision
-- Recall
-- F1-Score
-- Area Under the Curve (AUC)
-
----
-
 ## Project Workflow
 
 1. **Data Collection**:
