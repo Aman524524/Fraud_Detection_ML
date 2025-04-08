@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The "Fraud Detection in Financial Transactions" project is designed to identify fraudulent activities in transaction data using machine learning techniques. The goal is to build a highly accurate and scalable system capable of distinguishing legitimate transactions from fraudulent ones while minimizing false positives.
+The "Fraud Detection in Financial Transactions" project is designed to identify fraudulent activities in transaction data using machine learning techniques. The goal is to build a highly accurate and scalable system capable of distinguishing legitimate transactions from fraudulent ones.
 
 ## Objectives
 
@@ -20,31 +20,21 @@ The "Fraud Detection in Financial Transactions" project is designed to identify 
 - Python
 
 ### Data Processing
-- **Libraries**: Pandas, NumPy
+- **Libraries**: Pandas, NumPy, joblib
 - **Tools**: Jupyter Notebook
 
 ### Machine Learning
 - **Algorithms**:
-  - Random Forest
-  - Gradient Boosting (e.g., XGBoost, LightGBM)
-  - Logistic Regression
-- **Libraries**: scikit-learn, TensorFlow, PyTorch
+  - Isolation Forest 
+- **Libraries**: scikit-learn, streamlit
 
 ### Data Visualization
 - Matplotlib
 - Seaborn
-- Plotly
-
-### Data Storage
-- SQL or NoSQL databases:
-  - PostgreSQL
-  - MongoDB
 
 ### Dataset
 - Fraud detection datasets sourced from:
-  - Kaggle
-  - UCI Machine Learning Repository
-  - Synthetic datasets
+  - Kaggle-Bank Transaction Dataset for Fraud Detection
 
 ### Version Control
 - Git and GitHub
@@ -73,18 +63,10 @@ The "Fraud Detection in Financial Transactions" project is designed to identify 
 
 4. **Model Development**:
    - Implement and train machine learning models.
-   - Optimize hyperparameters using techniques like Grid Search or Random Search.
 
 5. **Evaluation**:
    - Evaluate models using metrics such as Precision, Recall, F1-Score, and AUC.
 
-6. **Deployment**:
-   - Deploy the system for real-time or batch transaction analysis.
-
-7. **Monitoring**:
-   - Continuously monitor the system's performance and retrain models as needed.
-
----
 
 ## Installation and Setup
 
@@ -102,11 +84,6 @@ The "Fraud Detection in Financial Transactions" project is designed to identify 
 3. Run the notebooks or scripts:
    - For data preprocessing: `notebooks/exploratory_analysis.ipynb`
    - For model training: `notebooks/model_training.ipynb`
-
-4. Configure the database:
-   - Update database credentials in `src/config.py`.
-
----
 
 ## File Structure
 
@@ -126,18 +103,13 @@ fraud-detection-ml/
 ├── tests/
 │   ├── test_data_preprocessing.py   # Unit tests for data preprocessing
 │   └── test_model_training.py       # Unit tests for model training
-├── docs/
-│   └── API_specifications.md        # API specifications for deployment
+├── main.py
+│── app.py
 ├── README.md                        # Project overview
 ├── requirements.txt                 # Dependencies
 ```
 
 ---
 
-## Contribution
-
-Contributions are welcome! Feel free to fork the repository, create a new branch, and submit a pull request. Please ensure that your code adheres to the existing style and passes all tests.
-
----
 
 
