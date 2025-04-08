@@ -1,33 +1,45 @@
 import pandas as pd
-import numpy as np
+
+import pandas as pd
 
 def create_transaction_features(df: pd.DataFrame) -> pd.DataFrame:
-    df['amount_bin'] = pd.qcut(df['amount'], q=4, labels=False, duplicates='drop')
-
-    if 'trans_date_trans_time' in df.columns:
-        df['trans_date_trans_time'] = pd.to_datetime(df['trans_date_trans_time'])
-        df['hour'] = df['trans_date_trans_time'].dt.hour
-        df['day'] = df['trans_date_trans_time'].dt.day
-        df['weekday'] = df['trans_date_trans_time'].dt.weekday
-
-    if 'customer_id' in df.columns:
-        freq = df.groupby('customer_id')['amount'].transform('count')
-        df['transaction_count'] = freq
-
-        avg_amount = df.groupby('customer_id')['amount'].transform('mean')
-        df['avg_transaction_amount'] = avg_amount
-
-    if 'avg_transaction_amount' in df.columns:
-        df['amount_vs_avg'] = df['amount'] - df['avg_transaction_amount']
-
-    df.fillna(0, inplace=True)
+    # Bin TransactionAmount into 4 quantiles
+    if 'TransactionAmount' in df.columns and df['TransactionAmount'].notnull().sum() > 0:
+        try:
+            df['TransactionAmountBin'] = pd.qcut(df['TransactionAmount'], q=4, labels=False, duplicates='drop')
+        except ValueError as e:
+            print(f"qcut failed: {e}")
+            df['TransactionAmountBin'] = 0  # fallback
+    
+    # Convert TransactionDate to datetime and extract features
+    if 'TransactionDate' in df.columns:
+        df['TransactionDate'] = pd.to_datetime(df['TransactionDate'], errors='coerce')
+        df['TransactionHour'] = df['TransactionDate'].dt.hour
+        df['TransactionDay'] = df['TransactionDate'].dt.day
+        df['TransactionWeekday'] = df['TransactionDate'].dt.weekday
+    
+    # Convert PreviousTransactionDate and calculate time delta
+    if 'PreviousTransactionDate' in df.columns:
+        df['PreviousTransactionDate'] = pd.to_datetime(df['PreviousTransactionDate'], errors='coerce')
+        if 'TransactionDate' in df.columns:
+            df['TimeSinceLastTransaction'] = (
+                df['TransactionDate'] - df['PreviousTransactionDate']
+            ).dt.total_seconds() / 3600.0  # hours
+        else:
+            df['TimeSinceLastTransaction'] = 0
+    
+    # Fill any remaining NaNs from datetime operations
+    df['TimeSinceLastTransaction'] = df['TimeSinceLastTransaction'].fillna(0)
+    df['TransactionHour'] = df['TransactionHour'].fillna(0).astype(int)
+    df['TransactionDay'] = df['TransactionDay'].fillna(0).astype(int)
+    df['TransactionWeekday'] = df['TransactionWeekday'].fillna(0).astype(int)
+    df['TransactionAmountBin'] = df['TransactionAmountBin'].fillna(0).astype(int)
 
     return df
 
-def drop_unnecessary_columns(df: pd.DataFrame, drop_columns: list = None) -> pd.DataFrame:
-    if drop_columns is None:
-        drop_columns = ['cc_num', 'first', 'last', 'trans_num', 'merchant', 'street', 'city', 'job']
-
-    existing_cols = [col for col in drop_columns if col in df.columns]
-    df = df.drop(columns=existing_cols)
+def drop_unnecessary_columns(df: pd.DataFrame) -> pd.DataFrame:
+    columns_to_drop = ['TransactionID', 'AccountID', 'TransactionDate', 'PreviousTransactionDate']
+    for col in columns_to_drop:
+        if col in df.columns:
+            df.drop(columns=col, inplace=True)
     return df
