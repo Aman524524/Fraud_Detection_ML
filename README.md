@@ -5,6 +5,7 @@
 The "Fraud Detection in Financial Transactions" project is designed to identify fraudulent activities in transaction data using machine learning techniques. The goal is to build a highly accurate and scalable system capable of distinguishing legitimate transactions from fraudulent ones.
 
 ## Objectives
+
 1. Analyze transaction data to detect fraud patterns.
 2. Build machine learning models to classify transactions as legitimate or fraudulent .
 3. Optimize the system for high accuracy, precision, and recall.
@@ -100,6 +101,7 @@ fraud-detection-ml/
 ```
 
 ---
+
 
 
 
