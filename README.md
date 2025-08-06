@@ -13,7 +13,6 @@ The "Fraud Detection in Financial Transactions" project is designed to identify 
 5. Ensure scalability for real-time or batch processing of transactions.
 
 ---
-
 ## Tools and Technologies
 
 ### Programming Language
@@ -102,6 +101,7 @@ fraud-detection-ml/
 ```
 
 ---
+
 
 
 
